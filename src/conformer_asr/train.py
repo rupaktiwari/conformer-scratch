@@ -54,6 +54,8 @@ def run(
         cfg.log.wandb_project = os.environ["WANDB_PROJECT"]
 
     _require_logging(cfg, use_wandb, use_hf)
+    # The encoder's input size and the log-mel extractor must describe the same spectrogram.
+    cfg.data.n_mels = cfg.model.n_mels
     pl.seed_everything(cfg.seed, workers=True)
 
     output_dir = Path(cfg.log.output_dir)

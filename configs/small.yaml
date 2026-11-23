@@ -27,6 +27,7 @@ data:
   min_duration_sec: 2.0
   max_duration_sec: 10.0
   sample_rate: 16000
+  n_mels: 80
   n_fft: 400
   hop_length: 160
   win_length: 400

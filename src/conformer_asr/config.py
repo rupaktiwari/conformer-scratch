@@ -31,6 +31,7 @@ class DataConfig:
     min_duration_sec: float = 2.0
     max_duration_sec: float = 10.0
     sample_rate: int = 16000
+    n_mels: int = 80
     n_fft: int = 400
     hop_length: int = 160
     win_length: int = 400
