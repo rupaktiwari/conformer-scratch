@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "conformer-asr"
+version = "0.1.0"
+description = "Gulati Conformer encoder trained as a small CTC ASR model."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pytorch-lightning>=2.2",
+    "datasets>=2.18",
+    "huggingface_hub>=0.26",
+    "wandb>=0.17",
+    "PyYAML>=6",
+    "soundfile>=0.12",
+    "jiwer>=3.0",
+    "numpy>=1.24",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

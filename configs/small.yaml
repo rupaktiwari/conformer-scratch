@@ -1,0 +1,55 @@
+# Small Gulati Conformer for a free Colab T4 (16 GB).
+# About 2.6M parameters. CTC head so training fits in one session.
+# Gulati et al. used an RNN-T decoder; CTC is the resource-constrained stand-in.
+
+seed: 13
+
+model:
+  n_mels: 80
+  d_model: 144
+  num_heads: 4
+  num_layers: 4
+  ffn_expansion: 4
+  # Paper reports kernel 32. 31 is odd, so same-padding stays symmetric.
+  conv_kernel_size: 31
+  dropout: 0.1
+  subsampling_channels: 144
+
+data:
+  dataset: openslr/librispeech_asr
+  dataset_config: clean
+  train_split: train.100
+  valid_split: validation
+  # Streaming stops once this many utterances are kept.
+  # The first train shard is ~0.5 GB; duration filtering may read into a second shard.
+  max_train_utterances: 1000
+  max_valid_utterances: 200
+  min_duration_sec: 2.0
+  max_duration_sec: 10.0
+  sample_rate: 16000
+  n_fft: 400
+  hop_length: 160
+  win_length: 400
+  specaugment: true
+  freq_mask_width: 15
+  time_mask_width: 40
+  n_freq_masks: 2
+  n_time_masks: 2
+
+train:
+  batch_size: 8
+  max_epochs: 25
+  # null means "use max_epochs". Set an int for a short smoke run.
+  max_steps: null
+  lr_warmup_steps: 200
+  gradient_clip_val: 5.0
+  precision: "32"
+  accumulate_grad_batches: 1
+  num_workers: 0
+  early_stop_patience: 10
+
+log:
+  wandb_project: conformer-asr
+  hf_repo_id: YOUR_HF_USERNAME/conformer-asr-tiny
+  hf_private: true
+  output_dir: outputs
